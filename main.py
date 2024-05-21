@@ -24,6 +24,21 @@ def play():
             print(display_hangman(tries))
             print(*word_completion)
             data = input('Введите символ или слово целиком\n').upper()
+            if len(data) == 1:
+                count = 0
+                guessed_letters.append(data)
+                for cur in range(len(word)):
+                    if word[cur] == data:
+                        word_completion[cur] = data
+                        count += 1
+                if count == 0:
+                    print('Неверно!')
+                    tries -= 1
+                elif ''.join(word_completion) == word:
+                    print('Поздравляем, вы угадали слово! Вы победили!')
+                    guessed = True
+                else:
+                    print('Поздравляем, вы угадали букву!')
 
 
 if __name__ == '__main__':
