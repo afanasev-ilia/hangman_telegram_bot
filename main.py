@@ -49,6 +49,8 @@ def play():
                     tries -= 1
         if not guessed:
             print(display_hangman(tries))
+            print('Вы проиграли!')
+            print(f'Правильный ответ {word}')
 
 
 if __name__ == '__main__':
