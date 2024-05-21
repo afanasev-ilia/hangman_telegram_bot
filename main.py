@@ -39,6 +39,14 @@ def play():
                     guessed = True
                 else:
                     print('Поздравляем, вы угадали букву!')
+            else:
+                guessed_words.append(data)
+                if data == word:
+                    print('Поздравляем, вы угадали слово! Вы победили!')
+                    guessed = True
+                else:
+                    print('Неверно!')
+                    tries -= 1
 
 
 if __name__ == '__main__':
