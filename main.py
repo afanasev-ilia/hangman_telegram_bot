@@ -47,6 +47,8 @@ def play():
                 else:
                     print('Неверно!')
                     tries -= 1
+        if not guessed:
+            print(display_hangman(tries))
 
 
 if __name__ == '__main__':
