@@ -51,6 +51,10 @@ def play():
             print(display_hangman(tries))
             print('Вы проиграли!')
             print(f'Правильный ответ {word}')
+        answer = input('Хотите сыграть ещё?\n 1 - да, 2 - нет\n')
+        if answer == '2':
+            print('Спасибо, что играли в нашу игру! До встречи!')
+            break
 
 
 if __name__ == '__main__':
