@@ -11,6 +11,12 @@ def display_hangman(tries):
     return stages[tries]
 
 
+def is_repeat(data, guessed_letters, guessed_words):
+    if data in guessed_letters or data in guessed_words:
+        return True
+    return False
+
+
 def play():
     print('Давайте играть в угадайку слов!')
     while True:
@@ -26,6 +32,9 @@ def play():
             data = input('Введите символ или слово целиком\n').upper()
             if len(data) == 1:
                 count = 0
+                if is_repeat(data, guessed_letters, guessed_words):
+                    print('Вы уже вводили эту букву!')
+                    continue
                 guessed_letters.append(data)
                 for cur in range(len(word)):
                     if word[cur] == data:
@@ -53,8 +62,8 @@ def play():
             print(f'Правильный ответ {word}')
         answer = input('Хотите сыграть ещё?\n 1 - да, 2 - нет\n')
         if answer == '2':
-            print('Спасибо, что играли в нашу игру! До встречи!')
             break
+    print('Спасибо, что играли в нашу игру! До встречи!')
 
 
 if __name__ == '__main__':
