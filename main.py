@@ -41,6 +41,8 @@ def play():
             print(display_hangman(tries))
             print(*word_completion)
             data = input('Введите символ или слово целиком\n').upper()
+            if not is_valid_input(data):
+                continue
             if len(data) == 1:
                 count = 0
                 if is_repeat(data, guessed_letters, guessed_words):
