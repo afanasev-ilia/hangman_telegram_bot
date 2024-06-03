@@ -17,6 +17,12 @@ def is_repeat(data, guessed_letters, guessed_words):
     return False
 
 
+def is_valid_input(data):
+    if not data.isalnum():
+        return False
+    return True
+
+
 def play():
     print('Давайте играть в угадайку слов!')
     while True:
