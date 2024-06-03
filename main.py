@@ -17,7 +17,7 @@ def is_repeat(data, guessed_letters, guessed_words):
     return False
 
 
-def is_valid_input(data):
+def is_valid_input(data: str) -> bool:
     if not data.isalnum():
         print('Допустимы только буквы!')
         return False
