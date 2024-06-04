@@ -62,6 +62,9 @@ def play():
                 else:
                     print('Поздравляем, вы угадали букву!')
             else:
+                if is_repeat(data, guessed_letters, guessed_words):
+                    print('Вы уже вводили это слово!')
+                    continue
                 guessed_words.append(data)
                 if data == word:
                     print('Поздравляем, вы угадали слово! Вы победили!')
