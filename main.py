@@ -21,11 +21,12 @@ def is_valid_input(data: str) -> bool:
     if not data.isalnum():
         print('Допустимы только буквы!')
         return False
-    for char in data:
-        if not 1040 <= ord(char) <= 1103:
-            print('Допустимы только буквы русского алфавита!')
-            return False
-    return True
+    else:
+        for char in data:
+            if not 1040 <= ord(char) <= 1103:
+                print('Допустимы только буквы русского алфавита!')
+                return False
+        return True
 
 
 def play():
