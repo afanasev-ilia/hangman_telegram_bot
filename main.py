@@ -52,6 +52,7 @@ def play():
                 print(display_hangman(tries))
                 print(*word_completion)
                 data = input('Введите символ или слово целиком\n').upper()
+                logging.info(f'User input: {data}')
                 if not is_valid_input(data):
                     continue
                 if len(data) == 1:
