@@ -58,6 +58,7 @@ def play():
                 if len(data) == 1:
                     count = 0
                     if is_repeat(data, guessed_letters, guessed_words):
+                        logging.warning('User input is a repeat')
                         print('Вы уже вводили эту букву!')
                         continue
                     guessed_letters.append(data)
