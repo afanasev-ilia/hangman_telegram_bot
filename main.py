@@ -1,6 +1,13 @@
+import logging
 import random
 
 from hangman_data import stages, word_list
+
+logging.basicConfig(
+    filename='hangman.log',
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s: %(message)s',
+)
 
 
 def get_word():
