@@ -42,6 +42,7 @@ def play():
     while True:
         try:
             word = get_word()
+            logging.info(f'Selected word: {word}')
             word_completion = ['_' for _ in range(len(word))]
             guessed = False
             guessed_letters = []
