@@ -67,12 +67,14 @@ def play():
                             word_completion[cur] = data
                             count += 1
                     if count == 0:
+                        logging.warning('User input is incorrect')
                         print('Неверно!')
                         tries -= 1
                     elif ''.join(word_completion) == word:
                         print('Поздравляем, вы угадали слово! Вы победили!')
                         guessed = True
                     else:
+                        logging.info('User guessed a letter')
                         print('Поздравляем, вы угадали букву!')
                 else:
                     if is_repeat(data, guessed_letters, guessed_words):
