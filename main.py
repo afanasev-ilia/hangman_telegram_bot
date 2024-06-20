@@ -71,6 +71,7 @@ def play():
                         print('Неверно!')
                         tries -= 1
                     elif ''.join(word_completion) == word:
+                        logging.info('User guessed the word')
                         print('Поздравляем, вы угадали слово! Вы победили!')
                         guessed = True
                     else:
@@ -78,10 +79,12 @@ def play():
                         print('Поздравляем, вы угадали букву!')
                 else:
                     if is_repeat(data, guessed_letters, guessed_words):
+                        logging.warning('User input is a repeat')
                         print('Вы уже вводили это слово!')
                         continue
                     guessed_words.append(data)
                     if data == word:
+                        logging.info('User guessed the word')
                         print('Поздравляем, вы угадали слово! Вы победили!')
                         guessed = True
                     else:
