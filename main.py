@@ -97,6 +97,7 @@ def play():
                 print('Вы проиграли!')
                 print(f'Правильный ответ {word}')
             answer = input('Хотите сыграть ещё?\n 1 - да, 2 - нет\n')
+            logging.info(f'User answer: {answer}')
             if answer == '2':
                 break
         except Exception as e:
