@@ -92,6 +92,7 @@ def play():
                         print('Неверно!')
                         tries -= 1
             if not guessed:
+                logging.info('User lost the game')
                 print(display_hangman(tries))
                 print('Вы проиграли!')
                 print(f'Правильный ответ {word}')
