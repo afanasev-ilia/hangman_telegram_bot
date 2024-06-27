@@ -101,6 +101,7 @@ def play():
             if answer == '2':
                 break
         except Exception as e:
+            logging.error(f'Error occurred: {e}')
             print(f'Произошла ошибка: {e}')
     print('Спасибо, что играли в нашу игру! До встречи!')
 
