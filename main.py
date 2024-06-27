@@ -88,6 +88,7 @@ def play():
                         print('Поздравляем, вы угадали слово! Вы победили!')
                         guessed = True
                     else:
+                        logging.warning('User input is incorrect')
                         print('Неверно!')
                         tries -= 1
             if not guessed:
