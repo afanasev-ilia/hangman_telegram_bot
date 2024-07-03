@@ -5,14 +5,14 @@ import logging
 # from django.conf import settings
 from pathlib import Path
 # from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
-# from telegram.ext import (
+from telegram.ext import (
 #     CommandHandler,
 #     CallbackContext,
 #     ConversationHandler,
 #     MessageHandler,
-#     Updater,
+   Updater,
 #     Filters,
-# )
+)
 
 # from report.models import Employee
 
@@ -227,9 +227,9 @@ logging.basicConfig(
 #     ],
 # )
 
-# updater = (
-#     Updater(token=settings.TELEGRAM_TOKEN)
-# )
+updater = (
+    Updater(token=settings.TELEGRAM_TOKEN)
+)
 # updater.dispatcher.add_handler(CommandHandler('start', start))
 # updater.dispatcher.add_handler(work_report_handler)
 # updater.dispatcher.add_handler(clean_report_handler)
