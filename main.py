@@ -103,6 +103,7 @@ def play():
         except Exception as e:
             logging.error(f'Error occurred: {e}')
             print(f'Произошла ошибка: {e}')
+    logging.info('Game ended')
     print('Спасибо, что играли в нашу игру! До встречи!')
 
 
