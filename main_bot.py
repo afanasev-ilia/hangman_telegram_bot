@@ -4,7 +4,7 @@ import logging
 
 # from django.conf import settings
 from pathlib import Path
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+# from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 # from telegram.ext import (
 #     CommandHandler,
 #     CallbackContext,
