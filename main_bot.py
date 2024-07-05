@@ -1,8 +1,9 @@
+import os 
 import logging
 # import requests
 # import base64
 
-# from django.conf import settings
+from dotenv import load_dotenv
 from pathlib import Path
 # from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
@@ -14,7 +15,9 @@ from telegram.ext import (
 #     Filters,
 )
 
-# from report.models import Employee
+load_dotenv()
+
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 
 logging.basicConfig(
