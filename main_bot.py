@@ -231,7 +231,7 @@ logging.basicConfig(
 # )
 
 updater = (
-    Updater(token=settings.TELEGRAM_TOKEN)
+    Updater(token=TELEGRAM_TOKEN)
 )
 # updater.dispatcher.add_handler(CommandHandler('start', start))
 # updater.dispatcher.add_handler(work_report_handler)
