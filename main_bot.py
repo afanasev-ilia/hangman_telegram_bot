@@ -5,10 +5,10 @@ import logging
 
 from dotenv import load_dotenv
 from pathlib import Path
-# from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
 #     CommandHandler,
-#     CallbackContext,
+    CallbackContext,
 #     ConversationHandler,
 #     MessageHandler,
    Updater,
@@ -43,17 +43,17 @@ logging.basicConfig(
 # )
 
 
-# def start(update: Update, context: CallbackContext) -> int:
-#     Employee.objects.get_or_create(external_id=update.effective_chat.id)
-#     button = ReplyKeyboardMarkup(
-#         [['Отчет о проделанной работе'], ['Отчет об уборке рабочего места']],
-#         resize_keyboard=True,
-#     )
-#     context.bot.send_message(
-#         chat_id=update.effective_chat.id,
-#         text='Здравствуйте! Пожалуйста, выберите тип отчета',
-#         reply_markup=button,
-#     )
+def start(update: Update, context: CallbackContext) -> int:
+    # Employee.objects.get_or_create(external_id=update.effective_chat.id)
+    button = ReplyKeyboardMarkup(
+        [['Начать игру'],],
+        resize_keyboard=True,
+    )
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='Здравствуйте!',
+        reply_markup=button,
+    )
 
 
 # def work_report(
