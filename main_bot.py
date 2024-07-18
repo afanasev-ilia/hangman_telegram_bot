@@ -157,31 +157,6 @@ def start(update: Update, context: CallbackContext) -> int:
 #     ],
 # )
 
-# clean_report_handler = ConversationHandler(
-#     entry_points=[
-#         MessageHandler(
-#             Filters.text('Отчет об уборке рабочего места'),
-#             clean_report,
-#         ),
-#     ],
-#     states={
-#         ORDER: [
-#             MessageHandler(
-#                 Filters.all,
-#                 order_handler,
-#             ),
-#         ],
-#         CLEAN_IMAGE: [
-#             MessageHandler(
-#                 Filters.all,
-#                 clean_image_handler,
-#             ),
-#         ],
-#     },
-#     fallbacks=[
-#         CommandHandler('cancel', cancel_handler),
-#     ],
-# )
 
 updater = (
     Updater(token=TELEGRAM_TOKEN)
