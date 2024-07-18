@@ -1,7 +1,6 @@
 import os
 import logging
 # import requests
-# import base64
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -44,7 +43,6 @@ logging.basicConfig(
 
 
 def start(update: Update, context: CallbackContext) -> int:
-    # Employee.objects.get_or_create(external_id=update.effective_chat.id)
     button = ReplyKeyboardMarkup(
         [['Начать игру'],],
         resize_keyboard=True,
@@ -99,35 +97,6 @@ def start(update: Update, context: CallbackContext) -> int:
 #     return WORK_IMAGE
 
 
-# def image_encode(update: Update) -> bytes:
-#     Path(f'media/temp/{update.message.chat.id}').mkdir(
-#         parents=True, exist_ok=True
-#     )
-#     file = update.message.photo[-1].get_file()
-#     file.download(f'media/temp/{update.message.chat.id}/downloaded_file.jpg')
-#     with open(
-#         f'media/temp/{update.message.chat.id}/downloaded_file.jpg', 'rb'
-#     ) as image_file:
-#         encoded_string = base64.b64encode(image_file.read())
-#         return encoded_string
-
-
-# def work_image_handler(update: Update, context: CallbackContext) -> int:
-#     encoded_string = image_encode(update)
-#     context.user_data[WORK_IMAGE] = (
-#         'data:image/png;base64,' + encoded_string.decode()
-#     )
-
-#     requests.post(settings.WORK_ENDPOINT, json=context.user_data)
-#     button = ReplyKeyboardMarkup(
-#         [['Отчет о проделанной работе'], ['Отчет об уборке рабочего места']],
-#         resize_keyboard=True,
-#     )
-#     update.message.reply_text('Спасибо! Отчет отправлен!',
-#                               reply_markup=button,)
-#     return ConversationHandler.END
-
-
 # def cancel_handler(
 #         update: Update,
 #         context: CallbackContext
@@ -148,22 +117,6 @@ def start(update: Update, context: CallbackContext) -> int:
 #         reply_markup=ReplyKeyboardRemove(),
 #     )
 #     return CLEAN_IMAGE
-
-
-# def clean_image_handler(update: Update, context: CallbackContext) -> int:
-#     encoded_string = image_encode(update)
-#     context.user_data[CLEAN_IMAGE] = (
-#         'data:image/png;base64,' + encoded_string.decode()
-#     )
-
-#     requests.post(settings.CLEAN_ENDPOINT, json=context.user_data)
-#     button = ReplyKeyboardMarkup(
-#         [['Отчет о проделанной работе'], ['Отчет об уборке рабочего места']],
-#         resize_keyboard=True,
-#     )
-#     update.message.reply_text('Спасибо! Отчет отправлен!',
-#                               reply_markup=button,)
-#     return ConversationHandler.END
 
 
 # work_report_handler = ConversationHandler(
@@ -234,7 +187,5 @@ updater = (
     Updater(token=TELEGRAM_TOKEN)
 )
 updater.dispatcher.add_handler(CommandHandler('start', start))
-
-
 updater.start_polling()
 updater.idle()
