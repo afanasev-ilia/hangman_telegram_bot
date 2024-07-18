@@ -1,4 +1,4 @@
-import os 
+import os
 import logging
 # import requests
 # import base64
@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 from pathlib import Path
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
-#     CommandHandler,
+    CommandHandler,
     CallbackContext,
-#     ConversationHandler,
-#     MessageHandler,
-   Updater,
-#     Filters,
+    ConversationHandler,
+    MessageHandler,
+    Updater,
+    Filters,
 )
 
 load_dotenv()
@@ -233,6 +233,8 @@ def start(update: Update, context: CallbackContext) -> int:
 updater = (
     Updater(token=TELEGRAM_TOKEN)
 )
-# updater.dispatcher.add_handler(CommandHandler('start', start))
-# updater.dispatcher.add_handler(work_report_handler)
-# updater.dispatcher.add_handler(clean_report_handler)
+updater.dispatcher.add_handler(CommandHandler('start', start))
+
+
+updater.start_polling()
+updater.idle()
