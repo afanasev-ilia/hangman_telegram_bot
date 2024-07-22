@@ -41,7 +41,11 @@ def wake_up(update, context):
 
 
 def play(update: Update, context: CallbackContext) -> int:
-    pass
+    chat = update.effective_chat
+    context.bot.send_message(
+        chat_id=chat.id,
+        text='Введите символ или слово целиком',
+    )
 
 
 updater = (
