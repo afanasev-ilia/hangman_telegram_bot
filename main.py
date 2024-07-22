@@ -38,7 +38,6 @@ def is_valid_input(data: str) -> bool:
 
 def play():
     logging.info('Starting game')
-    print('Давайте играть в угадайку слов!')
     while True:
         try:
             word = get_word()
