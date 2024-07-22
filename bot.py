@@ -33,9 +33,10 @@ def wake_up(update, context):
         [['Начать игру'],],
         resize_keyboard=True,
     )
+    name = update.message.chat.first_name
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text='Здравствуйте! Давайте играть в угадайку слов!',
+        text='Здравствуйте, {}! Давайте играть в угадайку слов!'.format(name),
         reply_markup=button,
     )
 
