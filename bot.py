@@ -28,7 +28,7 @@ logging.basicConfig(
 )
 
 
-def wake_up(update, context):
+def wake_up(update: Update, context: CallbackContext) -> int:
     button = ReplyKeyboardMarkup(
         [['Начать игру'],],
         resize_keyboard=True,
