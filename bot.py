@@ -46,10 +46,16 @@ def wake_up(update: Update, context: CallbackContext) -> int:
 def play(update: Update, context: CallbackContext) -> int:
     chat = update.effective_chat
     word = get_word()
-    context.bot.send_message(
-        chat_id=chat.id,
-        text='Введите символ или слово целиком',
-    )
+    # word_completion = ['_' for _ in range(len(word))]
+    guessed = False
+    # guessed_letters = []
+    # guessed_words = []
+    tries = len(word)
+    while not guessed and tries > 0:
+        context.bot.send_message(
+            chat_id=chat.id,
+            text='Введите символ или слово целиком',
+        )
 
 
 updater = (
