@@ -13,7 +13,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import get_word, display_hangman
+from main import display_hangman, get_word
 
 load_dotenv()
 
@@ -46,7 +46,7 @@ def wake_up(update: Update, context: CallbackContext) -> int:
 def play(update: Update, context: CallbackContext) -> int:
     chat = update.effective_chat
     word = get_word()
-    # word_completion = ['_' for _ in range(len(word))]
+    word_completion = ['_' for _ in range(len(word))]
     guessed = False
     # guessed_letters = []
     # guessed_words = []
@@ -58,8 +58,14 @@ def play(update: Update, context: CallbackContext) -> int:
         )
         context.bot.send_message(
             chat_id=chat.id,
+            text=' '.join(word_completion),
+        )
+        context.bot.send_message(
+            chat_id=chat.id,
             text='Введите символ или слово целиком',
         )
+        data = update.message.text.upper()
+        break
 
 
 updater = (
