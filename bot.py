@@ -13,7 +13,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import get_word
+from main import get_word, display_hangman
 
 load_dotenv()
 
@@ -52,6 +52,10 @@ def play(update: Update, context: CallbackContext) -> int:
     # guessed_words = []
     tries = len(word)
     while not guessed and tries > 0:
+        context.bot.send_message(
+            chat_id=chat.id,
+            text=display_hangman(tries),
+        )
         context.bot.send_message(
             chat_id=chat.id,
             text='Введите символ или слово целиком',
