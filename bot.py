@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import (
+    Application,
     CommandHandler,
     CallbackContext,
     Filters,
@@ -30,7 +31,7 @@ logging.basicConfig(
 )
 
 
-def wake_up(update: Update, context: CallbackContext) -> int:
+async def wake_up(update: Update, context: CallbackContext) -> int:
     button = ReplyKeyboardMarkup(
         [['Начать игру'],],
         resize_keyboard=True,
@@ -43,7 +44,7 @@ def wake_up(update: Update, context: CallbackContext) -> int:
     )
 
 
-def play(update: Update, context: CallbackContext) -> int:
+async def play(update: Update, context: CallbackContext) -> int:
     chat = update.effective_chat
     word = get_word()
     word_completion = ['_' for _ in range(len(word))]
@@ -68,10 +69,81 @@ def play(update: Update, context: CallbackContext) -> int:
         break
 
 
-updater = (
-    Updater(token=TELEGRAM_TOKEN)
+# updater = (
+#     Updater(token=TELEGRAM_TOKEN)
+# )
+# updater.dispatcher.add_handler(CommandHandler('start', wake_up))
+# updater.dispatcher.add_handler(MessageHandler(Filters.text, play))
+# updater.start_polling()
+# updater.idle()
+
+work_report_handler = ConversationHandler(
+    entry_points=[
+        MessageHandler(
+            Filters.text('Отчет о проделанной работе'),
+            work_report,
+        ),
+    ],
+    states={
+        ORDER: [
+            MessageHandler(
+                Filters.all,
+                order_handler,
+            ),
+        ],
+        ITEM_ORDER: [
+            MessageHandler(
+                Filters.all,
+                item_handler,
+            ),
+        ],
+        EXECUTION_TIME: [
+            MessageHandler(
+                Filters.all,
+                time_handler,
+            ),
+        ],
+        WORK_IMAGE: [
+            MessageHandler(
+                Filters.all,
+                work_image_handler,
+            ),
+        ],
+    },
+    fallbacks=[
+        CommandHandler('cancel', cancel_handler),
+    ],
 )
-updater.dispatcher.add_handler(CommandHandler('start', wake_up))
-updater.dispatcher.add_handler(MessageHandler(Filters.text, play))
-updater.start_polling()
-updater.idle()
+
+clean_report_handler = ConversationHandler(
+    entry_points=[
+        MessageHandler(
+            Filters.text('Отчет об уборке рабочего места'),
+            clean_report,
+        ),
+    ],
+    states={
+        ORDER: [
+            MessageHandler(
+                Filters.all,
+                order_handler,
+            ),
+        ],
+        CLEAN_IMAGE: [
+            MessageHandler(
+                Filters.all,
+                clean_image_handler,
+            ),
+        ],
+    },
+    fallbacks=[
+        CommandHandler('cancel', cancel_handler),
+    ],
+)
+
+updater = (
+    Updater(token=settings.TELEGRAM_TOKEN)
+)
+updater.dispatcher.add_handler(CommandHandler('start', start))
+updater.dispatcher.add_handler(work_report_handler)
+updater.dispatcher.add_handler(clean_report_handler)
