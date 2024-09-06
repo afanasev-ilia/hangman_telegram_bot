@@ -7,13 +7,12 @@ from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import (
     CallbackContext,
     CommandHandler,
-    ConversationHandler,
     Filters,
     MessageHandler,
     Updater,
 )
 
-from main import display_hangman, get_word
+from main import display_hangman, get_word, is_valid_input
 
 load_dotenv()
 
@@ -46,47 +45,25 @@ def wake_up(update: Update, context: CallbackContext) -> int:
 def play(update: Update, context: CallbackContext) -> int:
     word = get_word()
     word_completion = ['_' for _ in range(len(word))]
-    # guessed = False
+    guessed = False
     # guessed_letters = []
     # guessed_words = []
-    # tries = len(word)
+    tries = 6
 
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text='Game started! Guess the word:',
-    )
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=' '.join(word_completion),
-    )
+    while not guessed and tries > 0:
+        context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=(
+                f'{display_hangman(tries)}\n'
+                f'{" ".join(word_completion)}\n\n'
+                'Введите символ или слово целиком'
+            ),
+        )
+        user_input = update.message.text.upper()
+        if not is_valid_input(user_input):
+            continue
+        break
 
-
-
-# play_handler = ConversationHandler(
-#     entry_points=[
-#         MessageHandler(
-#             Filters.text('Начать игру'),
-#             play,
-#         ),
-#     ],
-#     states={
-#         # PLAYING: [
-#         #     MessageHandler(
-#         #         Filters.text,
-#         #         order_handler,
-#         #     ),
-#         # ],
-#         # ITEM_ORDER: [
-#         #     MessageHandler(
-#         #         Filters.all,
-#         #         item_handler,
-#         #     ),
-#         # ],
-#     },
-#     fallbacks=[
-#     #     CommandHandler('cancel', cancel_handler),
-#     ],
-# )
 
 updater = (
     Updater(token=TELEGRAM_TOKEN)
