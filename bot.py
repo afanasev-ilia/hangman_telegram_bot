@@ -30,7 +30,7 @@ logging.basicConfig(
 )
 
 
-async def wake_up(update: Update, context: CallbackContext) -> int:
+def wake_up(update: Update, context: CallbackContext) -> int:
     button = ReplyKeyboardMarkup(
         [['Начать игру'],],
         resize_keyboard=True,
@@ -43,56 +43,50 @@ async def wake_up(update: Update, context: CallbackContext) -> int:
     )
 
 
-async def play(update: Update, context: CallbackContext) -> int:
-    chat = update.effective_chat
+def play(update: Update, context: CallbackContext) -> int:
     word = get_word()
     word_completion = ['_' for _ in range(len(word))]
-    guessed = False
+    # guessed = False
     # guessed_letters = []
     # guessed_words = []
-    tries = len(word)
-    while not guessed and tries > 0:
-        context.bot.send_message(
-            chat_id=chat.id,
-            text=display_hangman(tries),
-        )
-        context.bot.send_message(
-            chat_id=chat.id,
-            text=' '.join(word_completion),
-        )
-        context.bot.send_message(
-            chat_id=chat.id,
-            text='Введите символ или слово целиком',
-        )
-        # data = update.message.text.upper()
-        break
+    # tries = len(word)
+
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='Game started! Guess the word:',
+    )
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=' '.join(word_completion),
+    )
 
 
-play_handler = ConversationHandler(
-    entry_points=[
-        MessageHandler(
-            Filters.text('Начать игру'),
-            play,
-        ),
-    ],
-    states={
-        # ORDER: [
-        #     MessageHandler(
-        #         Filters.all,
-        #         order_handler,
-        #     ),
-        # ],
-        # ITEM_ORDER: [
-        #     MessageHandler(
-        #         Filters.all,
-        #         item_handler,
-        #     ),
-        # ],
-    },
-    # fallbacks=[
-    #     CommandHandler('cancel', cancel_handler),
-    # ],
-)
+
+# play_handler = ConversationHandler(
+#     entry_points=[
+#         MessageHandler(
+#             Filters.text('Начать игру'),
+#             play,
+#         ),
+#     ],
+#     states={
+#         # PLAYING: [
+#         #     MessageHandler(
+#         #         Filters.text,
+#         #         order_handler,
+#         #     ),
+#         # ],
+#         # ITEM_ORDER: [
+#         #     MessageHandler(
+#         #         Filters.all,
+#         #         item_handler,
+#         #     ),
+#         # ],
+#     },
+#     fallbacks=[
+#     #     CommandHandler('cancel', cancel_handler),
+#     ],
+# )
 
 updater = (
     Updater(token=TELEGRAM_TOKEN)
