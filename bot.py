@@ -12,7 +12,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import display_hangman, get_word, is_valid_input
+from main import display_hangman, get_word, is_repeat  # , is_valid_input
 
 load_dotenv()
 
@@ -46,8 +46,8 @@ def play(update: Update, context: CallbackContext) -> int:
     word = get_word()
     word_completion = ['_' for _ in range(len(word))]
     guessed = False
-    # guessed_letters = []
-    # guessed_words = []
+    guessed_letters = []
+    guessed_words = []
     tries = 6
 
     while not guessed and tries > 0:
@@ -60,8 +60,19 @@ def play(update: Update, context: CallbackContext) -> int:
             ),
         )
         user_input = update.message.text.upper()
-        if not is_valid_input(user_input):
-            continue
+        if len(user_input) == 1:
+            count = 0
+            if is_repeat(user_input, guessed_letters, guessed_words):
+                context.bot.send_message(
+                    chat_id=update.effective_chat.id,
+                    text='Вы уже вводили эту букву!'
+                )
+                continue
+            guessed_letters.append(user_input)
+            for cur in range(len(word)):
+                if word[cur] == user_input:
+                    word_completion[cur] = user_input
+                    count += 1
         break
 
 
