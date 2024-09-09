@@ -50,8 +50,7 @@ def play(update: Update, context: CallbackContext) -> int:
     guessed_words = []
     tries = 6
 
-    while not guessed and tries > 0:
-        context.bot.send_message(
+    context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(tries)}\n'
@@ -59,21 +58,25 @@ def play(update: Update, context: CallbackContext) -> int:
                 'Введите символ или слово целиком'
             ),
         )
+
+    while 1 > 0:
         user_input = update.message.text.upper()
-        if len(user_input) == 1:
-            count = 0
-            if is_repeat(user_input, guessed_letters, guessed_words):
-                context.bot.send_message(
-                    chat_id=update.effective_chat.id,
-                    text='Вы уже вводили эту букву!'
-                )
-                continue
-            guessed_letters.append(user_input)
-            for cur in range(len(word)):
-                if word[cur] == user_input:
-                    word_completion[cur] = user_input
-                    count += 1
-        break
+        if is_repeat(user_input, guessed_letters, guessed_words):
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='Вы уже вводили эту букву или символ!'
+            )
+            continue
+        guessed_letters.append(user_input)
+        # if len(user_input) == 1:
+        #     count = 0
+        #     guessed_letters.append(user_input)
+        #     for cur in range(len(word)):
+        #         if word[cur] == user_input:
+        #             word_completion[cur] = user_input
+        #             count += 1
+        #     break
+        # guessed = True
 
 
 updater = (
