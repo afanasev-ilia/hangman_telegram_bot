@@ -7,6 +7,7 @@ from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import (
     CallbackContext,
     CommandHandler,
+    ConversationHandler,
     Filters,
     MessageHandler,
     Updater,
@@ -28,6 +29,11 @@ logging.basicConfig(
     ),
 )
 
+GUESSING_LETTER, GUESSING_WORD = (
+    'guessing_letter',
+    'guessing_word',
+)
+
 
 def wake_up(update: Update, context: CallbackContext) -> int:
     button = ReplyKeyboardMarkup(
@@ -45,7 +51,7 @@ def wake_up(update: Update, context: CallbackContext) -> int:
 def play(update: Update, context: CallbackContext) -> int:
     word = get_word()
     word_completion = ['_' for _ in range(len(word))]
-    guessed = False
+    # guessed = False
     guessed_letters = []
     guessed_words = []
     tries = 6
@@ -77,6 +83,33 @@ def play(update: Update, context: CallbackContext) -> int:
         #             count += 1
         #     break
         # guessed = True
+
+
+clean_report_handler = ConversationHandler(
+    entry_points=[
+        MessageHandler(
+            Filters.text('игра'),
+            play,
+        ),
+    ],
+    states={
+        GUESSING_LETTER: [
+            MessageHandler(
+                Filters.all,
+                #  guessing_letter_handler,
+            ),
+        ],
+        GUESSING_WORD: [
+            MessageHandler(
+                Filters.all,
+                # guessing_word_handler,
+            ),
+        ],
+    },
+    # fallbacks=[
+    #     CommandHandler('cancel', cancel_handler),
+    # ],
+)
 
 
 updater = (
