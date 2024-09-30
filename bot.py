@@ -13,7 +13,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import display_hangman, get_word, is_repeat  # , is_valid_input
+from main import display_hangman, get_word
 
 load_dotenv()
 
@@ -53,7 +53,7 @@ def play(update: Update, context: CallbackContext) -> int:
     word_completion = ['_' for _ in range(len(word))]
     # guessed = False
     guessed_letters = []
-    guessed_words = []
+    # guessed_words = []
     tries = 6
 
     context.bot.send_message(
@@ -64,28 +64,29 @@ def play(update: Update, context: CallbackContext) -> int:
                 'Введите символ или слово целиком'
             ),
         )
+    user_input = update.message.text.upper()
+    if len(user_input) == 1:
+        return GUESSING_LETTER
+    return GUESSING_WORD
+        # count = 0
+        # guessed_letters.append(user_input)
+        # for cur in range(len(word)):
+        #     if word[cur] == user_input:
+        #         word_completion[cur] = user_input
+        #         count += 1
 
-    while 1 > 0:
-        user_input = update.message.text.upper()
-        if is_repeat(user_input, guessed_letters, guessed_words):
-            context.bot.send_message(
-                chat_id=update.effective_chat.id,
-                text='Вы уже вводили эту букву или символ!'
-            )
-            continue
-        guessed_letters.append(user_input)
-        # if len(user_input) == 1:
-        #     count = 0
-        #     guessed_letters.append(user_input)
-        #     for cur in range(len(word)):
-        #         if word[cur] == user_input:
-        #             word_completion[cur] = user_input
-        #             count += 1
-        #     break
-        # guessed = True
+    # while 1 > 0:
+    #     user_input = update.message.text.upper()
+    #     if is_repeat(user_input, guessed_letters, guessed_words):
+    #         context.bot.send_message(
+    #             chat_id=update.effective_chat.id,
+    #             text='Вы уже вводили эту букву или символ!'
+    #         )
+    #         continue
+    #     guessed_letters.append(user_input)
 
 
-clean_report_handler = ConversationHandler(
+play_handler = ConversationHandler(
     entry_points=[
         MessageHandler(
             Filters.text('игра'),
