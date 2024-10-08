@@ -29,7 +29,10 @@ logging.basicConfig(
     ),
 )
 
-GUESSING_LETTER, GUESSING_WORD = (
+WORD, WORD_COMPLETION, TRIES, GUESSING_LETTER, GUESSING_WORD = (
+    'word',
+    'word_completion',
+    'tries',
     'guessing_letter',
     'guessing_word',
 )
@@ -49,18 +52,18 @@ def wake_up(update: Update, context: CallbackContext) -> int:
 
 
 def play(update: Update, context: CallbackContext) -> int:
-    word = get_word()
-    word_completion = ['_' for _ in range(len(word))]
+    context.user_data[WORD] = get_word()
+    context.user_data[WORD_COMPLETION] = ['_' for _ in range(len(context.user_data[WORD]))]
     # guessed = False
-    guessed_letters = []
+    # guessed_letters = []
     # guessed_words = []
-    tries = 6
+    context.user_data[TRIES] = 2
 
     context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
-                f'{display_hangman(tries)}\n'
-                f'{" ".join(word_completion)}\n\n'
+                f'{display_hangman(context.user_data[TRIES])}\n'
+                f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
                 'Введите символ или слово целиком'
             ),
         )
@@ -86,6 +89,22 @@ def play(update: Update, context: CallbackContext) -> int:
     #     guessed_letters.append(user_input)
 
 
+def guessing_letter_handler(update: Update, context: CallbackContext) -> int:
+    print('это guessing_letter_handler')
+
+ 
+def guessing_word_handler(update: Update, context: CallbackContext) -> int:
+    print('это guessing_word_handler')
+
+
+def cancel_handler(
+        update: Update,
+        context: CallbackContext
+) -> int:
+    update.message.reply_text('Спасибо, что играли в нашу игру! До встречи!')
+    return ConversationHandler.END
+
+
 play_handler = ConversationHandler(
     entry_points=[
         MessageHandler(
@@ -97,19 +116,19 @@ play_handler = ConversationHandler(
         GUESSING_LETTER: [
             MessageHandler(
                 Filters.all,
-                #  guessing_letter_handler,
+                guessing_letter_handler,
             ),
         ],
         GUESSING_WORD: [
             MessageHandler(
                 Filters.all,
-                # guessing_word_handler,
+                guessing_word_handler,
             ),
         ],
     },
-    # fallbacks=[
-    #     CommandHandler('cancel', cancel_handler),
-    # ],
+    fallbacks=[
+        CommandHandler('cancel', cancel_handler),
+    ],
 )
 
 
