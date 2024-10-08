@@ -29,10 +29,11 @@ logging.basicConfig(
     ),
 )
 
-WORD, WORD_COMPLETION, TRIES, GUESSING_LETTER, GUESSING_WORD = (
+WORD, WORD_COMPLETION, TRIES, PLAY, GUESSING_LETTER, GUESSING_WORD = (
     'word',
     'word_completion',
     'tries',
+    'play',
     'guessing_letter',
     'guessing_word',
 )
@@ -51,13 +52,15 @@ def wake_up(update: Update, context: CallbackContext) -> int:
     )
 
 
-def play(update: Update, context: CallbackContext) -> int:
+def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD] = get_word()
-    context.user_data[WORD_COMPLETION] = ['_' for _ in range(len(context.user_data[WORD]))]
+    context.user_data[WORD_COMPLETION] = [
+        '_' for _ in range(len(context.user_data[WORD]))
+    ]
     # guessed = False
     # guessed_letters = []
     # guessed_words = []
-    context.user_data[TRIES] = 2
+    context.user_data[TRIES] = 6
 
     context.bot.send_message(
             chat_id=update.effective_chat.id,
@@ -67,34 +70,38 @@ def play(update: Update, context: CallbackContext) -> int:
                 'Введите символ или слово целиком'
             ),
         )
+    return PLAY
+
+
+def play(update: Update, context: CallbackContext) -> int:
     user_input = update.message.text.upper()
+    context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=(
+                'это play'
+            ),
+    )
     if len(user_input) == 1:
         return GUESSING_LETTER
     return GUESSING_WORD
-        # count = 0
-        # guessed_letters.append(user_input)
-        # for cur in range(len(word)):
-        #     if word[cur] == user_input:
-        #         word_completion[cur] = user_input
-        #         count += 1
-
-    # while 1 > 0:
-    #     user_input = update.message.text.upper()
-    #     if is_repeat(user_input, guessed_letters, guessed_words):
-    #         context.bot.send_message(
-    #             chat_id=update.effective_chat.id,
-    #             text='Вы уже вводили эту букву или символ!'
-    #         )
-    #         continue
-    #     guessed_letters.append(user_input)
 
 
 def guessing_letter_handler(update: Update, context: CallbackContext) -> int:
-    print('это guessing_letter_handler')
+    context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=(
+                'это guessing_letter_handler'
+            ),
+    )
 
- 
+
 def guessing_word_handler(update: Update, context: CallbackContext) -> int:
-    print('это guessing_word_handler')
+    context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=(
+                'это guessing_word_handler'
+            ),
+    )
 
 
 def cancel_handler(
@@ -108,11 +115,17 @@ def cancel_handler(
 play_handler = ConversationHandler(
     entry_points=[
         MessageHandler(
-            Filters.text('игра'),
-            play,
+            Filters.text('Начать игру'),
+            start_game,
         ),
     ],
     states={
+        PLAY: [
+            MessageHandler(
+                Filters.all,
+                play,
+            ),
+        ],
         GUESSING_LETTER: [
             MessageHandler(
                 Filters.all,
@@ -136,6 +149,6 @@ updater = (
     Updater(token=TELEGRAM_TOKEN)
 )
 updater.dispatcher.add_handler(CommandHandler('start', wake_up))
-updater.dispatcher.add_handler(MessageHandler(Filters.text, play))
+updater.dispatcher.add_handler(play_handler)
 updater.start_polling()
 updater.idle()
