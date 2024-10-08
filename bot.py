@@ -68,6 +68,7 @@ def start_game(update: Update, context: CallbackContext) -> int:
                 f'{display_hangman(context.user_data[TRIES])}\n'
                 f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
                 'Введите символ или слово целиком'
+                f'{context.user_data[WORD]}\n\n'
             ),
         )
     return PLAY
@@ -75,33 +76,37 @@ def start_game(update: Update, context: CallbackContext) -> int:
 
 def play(update: Update, context: CallbackContext) -> int:
     user_input = update.message.text.upper()
+    for cur in range(len(context.user_data[WORD])):
+        if context.user_data[WORD][cur] == user_input:
+            context.user_data[WORD][cur] = user_input
     context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
-                'это play'
+                f'{display_hangman(context.user_data[TRIES])}\n'
+                f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
+                'Введите символ или слово целиком'
+                f'{context.user_data[WORD]}\n\n'
             ),
-    )
-    if len(user_input) == 1:
-        return GUESSING_LETTER
-    return GUESSING_WORD
+        )
+    return PLAY
 
 
-def guessing_letter_handler(update: Update, context: CallbackContext) -> int:
-    context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=(
-                'это guessing_letter_handler'
-            ),
-    )
+# def guessing_letter_handler(update: Update, context: CallbackContext) -> int:
+#     context.bot.send_message(
+#             chat_id=update.effective_chat.id,
+#             text=(
+#                 'это guessing_letter_handler'
+#             ),
+#     )
 
 
-def guessing_word_handler(update: Update, context: CallbackContext) -> int:
-    context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text=(
-                'это guessing_word_handler'
-            ),
-    )
+# def guessing_word_handler(update: Update, context: CallbackContext) -> int:
+#     context.bot.send_message(
+#             chat_id=update.effective_chat.id,
+#             text=(
+#                 'это guessing_word_handler'
+#             ),
+#     )
 
 
 def cancel_handler(
@@ -126,18 +131,18 @@ play_handler = ConversationHandler(
                 play,
             ),
         ],
-        GUESSING_LETTER: [
-            MessageHandler(
-                Filters.all,
-                guessing_letter_handler,
-            ),
-        ],
-        GUESSING_WORD: [
-            MessageHandler(
-                Filters.all,
-                guessing_word_handler,
-            ),
-        ],
+        # GUESSING_LETTER: [
+        #     MessageHandler(
+        #         Filters.all,
+        #         guessing_letter_handler,
+        #     ),
+        # ],
+        # GUESSING_WORD: [
+        #     MessageHandler(
+        #         Filters.all,
+        #         guessing_word_handler,
+        #     ),
+        # ],
     },
     fallbacks=[
         CommandHandler('cancel', cancel_handler),
