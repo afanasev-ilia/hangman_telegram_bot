@@ -93,6 +93,13 @@ def play(update: Update, context: CallbackContext) -> int:
                 chat_id=update.effective_chat.id,
                 text='Неверно!',
             )
+        elif ''.join(word_completion) == word:
+            context.user_data[WORD_COMPLETION] = word_completion
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='Поздравляем, вы угадали слово! Вы победили!',
+            )
+            return ConversationHandler.END
 
     context.bot.send_message(
             chat_id=update.effective_chat.id,
@@ -103,6 +110,7 @@ def play(update: Update, context: CallbackContext) -> int:
                 f'{context.user_data[WORD]}'
             ),
         )
+
     return PLAY
 
 
