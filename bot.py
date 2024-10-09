@@ -76,9 +76,16 @@ def start_game(update: Update, context: CallbackContext) -> int:
 
 def play(update: Update, context: CallbackContext) -> int:
     user_input = update.message.text.upper()
-    for cur in range(len(context.user_data[WORD])):
-        if context.user_data[WORD][cur] == user_input:
-            context.user_data[WORD][cur] = user_input
+    word = context.user_data[WORD]
+    word_completion = context.user_data[WORD_COMPLETION]
+
+    if len(user_input) == 1:
+        count = 0
+        for cur in range(len(word)):
+            if word[cur] == user_input:
+                word_completion[cur] = user_input
+                count += 1
+
     context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
@@ -89,24 +96,6 @@ def play(update: Update, context: CallbackContext) -> int:
             ),
         )
     return PLAY
-
-
-# def guessing_letter_handler(update: Update, context: CallbackContext) -> int:
-#     context.bot.send_message(
-#             chat_id=update.effective_chat.id,
-#             text=(
-#                 'это guessing_letter_handler'
-#             ),
-#     )
-
-
-# def guessing_word_handler(update: Update, context: CallbackContext) -> int:
-#     context.bot.send_message(
-#             chat_id=update.effective_chat.id,
-#             text=(
-#                 'это guessing_word_handler'
-#             ),
-#     )
 
 
 def cancel_handler(
