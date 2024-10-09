@@ -67,8 +67,8 @@ def start_game(update: Update, context: CallbackContext) -> int:
             text=(
                 f'{display_hangman(context.user_data[TRIES])}\n'
                 f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
-                'Введите символ или слово целиком'
-                f'{context.user_data[WORD]}\n\n'
+                'Введите символ или слово целиком\n'
+                f'{context.user_data[WORD]}'
             ),
         )
     return PLAY
@@ -78,6 +78,7 @@ def play(update: Update, context: CallbackContext) -> int:
     user_input = update.message.text.upper()
     word = context.user_data[WORD]
     word_completion = context.user_data[WORD_COMPLETION]
+    tries = context.user_data[TRIES]
 
     if len(user_input) == 1:
         count = 0
@@ -85,14 +86,21 @@ def play(update: Update, context: CallbackContext) -> int:
             if word[cur] == user_input:
                 word_completion[cur] = user_input
                 count += 1
+        if count == 0:
+            tries -= 1
+            context.user_data[TRIES] = tries
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='Неверно!',
+            )
 
     context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(context.user_data[TRIES])}\n'
                 f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
-                'Введите символ или слово целиком'
-                f'{context.user_data[WORD]}\n\n'
+                'Введите символ или слово целиком\n'
+                f'{context.user_data[WORD]}'
             ),
         )
     return PLAY
@@ -120,18 +128,6 @@ play_handler = ConversationHandler(
                 play,
             ),
         ],
-        # GUESSING_LETTER: [
-        #     MessageHandler(
-        #         Filters.all,
-        #         guessing_letter_handler,
-        #     ),
-        # ],
-        # GUESSING_WORD: [
-        #     MessageHandler(
-        #         Filters.all,
-        #         guessing_word_handler,
-        #     ),
-        # ],
     },
     fallbacks=[
         CommandHandler('cancel', cancel_handler),
