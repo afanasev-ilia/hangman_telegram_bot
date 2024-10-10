@@ -57,7 +57,6 @@ def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
     ]
-    # guessed = False
     # guessed_letters = []
     # guessed_words = []
     context.user_data[TRIES] = 6
@@ -84,6 +83,7 @@ def play(update: Update, context: CallbackContext) -> int:
         context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
+                f'{display_hangman(context.user_data[TRIES] - 1)}\n'
                 'Вы проиграли!\n'
                 f'Правильный ответ {word}'
             ),
