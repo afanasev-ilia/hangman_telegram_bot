@@ -80,6 +80,16 @@ def play(update: Update, context: CallbackContext) -> int:
     word_completion = context.user_data[WORD_COMPLETION]
     tries = context.user_data[TRIES]
 
+    if tries == 1:
+        context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=(
+                'Вы проиграли!\n'
+                f'Правильный ответ {word}'
+            ),
+        )
+        return ConversationHandler.END
+
     if len(user_input) == 1:
         count = 0
         for cur in range(len(word)):
