@@ -106,6 +106,14 @@ def play(update: Update, context: CallbackContext) -> int:
                 chat_id=update.effective_chat.id,
                 text='Поздравляем, вы угадали букву!',
             )
+    else:
+        if user_input == word:
+            context.user_data[WORD_COMPLETION] = list(word)
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='Поздравляем, вы угадали слово! Вы победили!',
+            )
+            return ConversationHandler.END
 
     context.bot.send_message(
             chat_id=update.effective_chat.id,
