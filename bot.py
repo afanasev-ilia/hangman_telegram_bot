@@ -81,7 +81,11 @@ def play(update: Update, context: CallbackContext) -> int:
     tries = context.user_data[TRIES]
 
     if not is_valid_input(user_input):
-        pass
+        context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Недопусмтимый символ',
+        )
+        return PLAY
 
     if tries == 1:
         context.bot.send_message(
