@@ -83,7 +83,7 @@ def play(update: Update, context: CallbackContext) -> int:
     if not is_valid_input(user_input):
         context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text='Недопусмтимый символ',
+            text='Допустимы только буквы русского алфавита!',
         )
         return PLAY
 
