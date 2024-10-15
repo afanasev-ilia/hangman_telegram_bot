@@ -13,7 +13,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import display_hangman, get_word
+from main import display_hangman, get_word, is_valid_input
 
 load_dotenv()
 
@@ -43,6 +43,7 @@ def wake_up(update: Update, context: CallbackContext) -> int:
     button = ReplyKeyboardMarkup(
         [['Начать игру'],],
         resize_keyboard=True,
+        one_time_keyboard=True,
     )
     name = update.message.chat.first_name
     context.bot.send_message(
