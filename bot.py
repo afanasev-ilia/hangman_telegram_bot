@@ -80,6 +80,9 @@ def play(update: Update, context: CallbackContext) -> int:
     word_completion = context.user_data[WORD_COMPLETION]
     tries = context.user_data[TRIES]
 
+    if not is_valid_input(user_input):
+        pass
+
     if tries == 1:
         context.bot.send_message(
             chat_id=update.effective_chat.id,
