@@ -58,7 +58,7 @@ def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
     ]
-    # guessed_letters = []
+    guessed_letters = []
     # guessed_words = []
     context.user_data[TRIES] = 6
 
