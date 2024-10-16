@@ -18,8 +18,8 @@ def display_hangman(tries):
     return stages[tries]
 
 
-def is_repeat(data, guessed_letters, guessed_words):
-    if data in guessed_letters or data in guessed_words:
+def is_repeat(data, repeated_letters, repeated_words):
+    if data in repeated_letters or data in repeated_words:
         return True
     return False
 

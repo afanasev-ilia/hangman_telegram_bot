@@ -13,7 +13,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import display_hangman, get_word, is_valid_input
+from main import display_hangman, get_word, is_repeat, is_valid_input
 
 load_dotenv()
 
@@ -58,7 +58,7 @@ def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
     ]
-    guessed_letters = []
+    repeated_letters = []
     # guessed_words = []
     context.user_data[TRIES] = 6
 
