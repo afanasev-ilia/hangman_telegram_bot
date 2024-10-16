@@ -58,8 +58,8 @@ def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
     ]
-    repeated_letters = []
-    # guessed_words = []
+    context.user_data['repeated_letters'] = []
+    context.user_data['repeated_words'] = []
     context.user_data[TRIES] = 6
 
     context.bot.send_message(
@@ -79,6 +79,8 @@ def play(update: Update, context: CallbackContext) -> int:
     word = context.user_data[WORD]
     word_completion = context.user_data[WORD_COMPLETION]
     tries = context.user_data[TRIES]
+    repeated_letters = context.user_data['repeated_letters']
+    repeated_words = context.user_data['repeated_words']
 
     if not is_valid_input(user_input):
         context.bot.send_message(
@@ -99,6 +101,12 @@ def play(update: Update, context: CallbackContext) -> int:
         return ConversationHandler.END
 
     if len(user_input) == 1:
+        if is_repeat(user_input, repeated_letters, repeated_words):
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='Вы уже вводили эту букву!',
+            )
+            return PLAY
         count = 0
         for cur in range(len(word)):
             if word[cur] == user_input:
