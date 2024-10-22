@@ -135,6 +135,12 @@ def play(update: Update, context: CallbackContext) -> int:
                 text='Поздравляем, вы угадали букву!',
             )
     else:
+        if is_repeat(user_input, repeated_letters, repeated_words):
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='Вы уже вводили это слово!',
+            )
+            return PLAY
         if user_input == word:
             context.user_data[WORD_COMPLETION] = list(word)
             context.bot.send_message(
