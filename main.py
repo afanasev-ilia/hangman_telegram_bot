@@ -25,15 +25,11 @@ def is_repeat(data, repeated_letters, repeated_words):
 
 
 def is_valid_input(data: str) -> bool:
-    if not data.isalnum():
-        print('Допустимы только буквы!')
-        return False
-    else:
-        for char in data:
-            if not 1040 <= ord(char) <= 1103:
-                print('Допустимы только буквы русского алфавита!')
-                return False
-        return True
+    for char in data:
+        if not 1040 <= ord(char) <= 1103:
+            print('Допустимы только буквы русского алфавита!')
+            return False
+    return True
 
 
 def play():
