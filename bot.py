@@ -143,6 +143,8 @@ def play(update: Update, context: CallbackContext) -> int:
             return PLAY
 
         repeated_words.append(user_input)
+        context.user_data['repeated_words'] = repeated_words
+
         if user_input == word:
             context.user_data[WORD_COMPLETION] = list(word)
             context.bot.send_message(
