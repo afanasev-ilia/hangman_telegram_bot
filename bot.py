@@ -141,6 +141,8 @@ def play(update: Update, context: CallbackContext) -> int:
                 text='Вы уже вводили это слово!',
             )
             return PLAY
+        
+        guessed_words.append(user_input)
         if user_input == word:
             context.user_data[WORD_COMPLETION] = list(word)
             context.bot.send_message(
