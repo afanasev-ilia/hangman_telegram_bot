@@ -34,7 +34,7 @@ WORD, WORD_COMPLETION, TRIES, PLAY, GUESSING_LETTER, GUESSING_WORD = (
     'word_completion',
     'tries',
     'play',
-    'guessing_letter',
+    'repeated_letters',
     'guessing_word',
 )
 
