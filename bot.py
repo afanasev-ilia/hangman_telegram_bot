@@ -29,7 +29,7 @@ logging.basicConfig(
     ),
 )
 
-WORD, WORD_COMPLETION, TRIES, PLAY, GUESSING_LETTER, GUESSING_WORD = (
+WORD, WORD_COMPLETION, TRIES, PLAY, REPEATED_LETTER, GUESSING_WORD = (
     'word',
     'word_completion',
     'tries',
@@ -58,7 +58,7 @@ def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
     ]
-    context.user_data['repeated_letters'] = []
+    context.user_data[REPEATED_LETTER] = []
     context.user_data['repeated_words'] = []
     context.user_data[TRIES] = 6
     context.user_data['guessed'] = False
