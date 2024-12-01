@@ -80,7 +80,7 @@ def play(update: Update, context: CallbackContext) -> int:
     word = context.user_data[WORD]
     word_completion = context.user_data[WORD_COMPLETION]
     tries = context.user_data[TRIES]
-    repeated_letters = context.user_data['repeated_letters']
+    repeated_letters = context.user_data[REPEATED_LETTER]
     repeated_words = context.user_data['repeated_words']
 
     if not is_valid_input(user_input):
