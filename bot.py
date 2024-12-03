@@ -29,7 +29,7 @@ logging.basicConfig(
     ),
 )
 
-WORD, WORD_COMPLETION, TRIES, PLAY, REPEATED_LETTER, GUESSING_WORD = (
+WORD, WORD_COMPLETION, TRIES, PLAY, REPEATED_LETTER, REPEATED_WORD = (
     'word',
     'word_completion',
     'tries',
