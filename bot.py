@@ -109,7 +109,7 @@ def play(update: Update, context: CallbackContext) -> int:
             )
             return PLAY
         repeated_letters.append(user_input)
-        context.user_data['repeated_letters'] = repeated_letters
+        context.user_data[REPEATED_LETTER] = repeated_letters
         count = 0
         for cur in range(len(word)):
             if word[cur] == user_input:
