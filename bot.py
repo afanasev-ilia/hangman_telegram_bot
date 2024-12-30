@@ -29,13 +29,13 @@ logging.basicConfig(
     ),
 )
 
-WORD, WORD_COMPLETION, TRIES, PLAY, REPEATED_LETTER, REPEATED_WORD, GUESSED = (
+WORD, WORD_COMPLETION, TRIES, PLAY, REPEATED_LETTERS, REPEATED_WORDS, GUESSED = (
     'word',
     'word_completion',
     'tries',
     'play',
     'repeated_letters',
-    'repeated_word',
+    'repeated_words',
     'guessed',
 )
 
@@ -59,8 +59,8 @@ def start_game(update: Update, context: CallbackContext) -> int:
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
     ]
-    context.user_data[REPEATED_LETTER] = []
-    context.user_data[REPEATED_WORD] = []
+    context.user_data[REPEATED_LETTERS] = []
+    context.user_data[REPEATED_WORDS] = []
     context.user_data[TRIES] = 6
     context.user_data[GUESSED] = False
 
@@ -81,7 +81,7 @@ def play(update: Update, context: CallbackContext) -> int:
     word = context.user_data[WORD]
     word_completion = context.user_data[WORD_COMPLETION]
     tries = context.user_data[TRIES]
-    repeated_letters = context.user_data[REPEATED_LETTER]
+    repeated_letters = context.user_data[REPEATED_LETTERS]
     repeated_words = context.user_data['repeated_words']
 
     if not is_valid_input(user_input):
