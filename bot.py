@@ -29,14 +29,22 @@ logging.basicConfig(
     ),
 )
 
-WORD, WORD_COMPLETION, TRIES, PLAY, REPEATED_LETTERS, REPEATED_WORDS, GUESSED = (
-    'word',
-    'word_completion',
-    'tries',
-    'play',
-    'repeated_letters',
-    'repeated_words',
-    'guessed',
+(
+    WORD,
+    WORD_COMPLETION,
+    TRIES,
+    PLAY,
+    REPEATED_LETTERS,
+    REPEATED_WORDS,
+    GUESSED,
+) = (
+    "word",
+    "word_completion",
+    "tries",
+    "play",
+    "repeated_letters",
+    "repeated_words",
+    "guessed",
 )
 
 
@@ -110,7 +118,7 @@ def play(update: Update, context: CallbackContext) -> int:
             )
             return PLAY
         repeated_letters.append(user_input)
-        context.user_data[REPEATED_LETTER] = repeated_letters
+        context.user_data[REPEATED_LETTERS] = repeated_letters
         count = 0
         for cur in range(len(word)):
             if word[cur] == user_input:
@@ -145,7 +153,7 @@ def play(update: Update, context: CallbackContext) -> int:
             return PLAY
 
         repeated_words.append(user_input)
-        context.user_data[REPEATED_WORD] = repeated_words
+        context.user_data[REPEATED_WORDS] = repeated_words
 
         if user_input == word:
             context.user_data[WORD_COMPLETION] = list(word)
