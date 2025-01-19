@@ -38,13 +38,13 @@ logging.basicConfig(
     REPEATED_WORDS,
     GUESSED,
 ) = (
-    "word",
-    "word_completion",
-    "tries",
-    "play",
-    "repeated_letters",
-    "repeated_words",
-    "guessed",
+    'word',
+    'word_completion',
+    'tries',
+    'play',
+    'repeated_letters',
+    'repeated_words',
+    'guessed',
 )
 
 
@@ -76,7 +76,7 @@ def start_game(update: Update, context: CallbackContext) -> int:
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(context.user_data[TRIES])}\n'
-                f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
+                f'{' '.join(context.user_data[WORD_COMPLETION])}\n\n'
                 'Введите символ или слово целиком\n'
                 f'{context.user_data[WORD]}'
             ),
@@ -174,7 +174,7 @@ def play(update: Update, context: CallbackContext) -> int:
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(context.user_data[TRIES])}\n'
-                f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
+                f'{' '.join(context.user_data[WORD_COMPLETION])}\n\n'
                 'Введите символ или слово целиком\n'
                 f'{context.user_data[WORD]}'
             ),
