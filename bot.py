@@ -37,15 +37,7 @@ logging.basicConfig(
     REPEATED_LETTERS,
     REPEATED_WORDS,
     GUESSED,
-) = (
-    'word',
-    'word_completion',
-    'tries',
-    'play',
-    'repeated_letters',
-    'repeated_words',
-    'guessed',
-)
+) = range(7)
 
 
 def wake_up(update: Update, context: CallbackContext) -> int:
