@@ -68,9 +68,9 @@ def start_game(update: Update, context: CallbackContext) -> int:
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(context.user_data[TRIES])}\n'
-                f'{' '.join(context.user_data[WORD_COMPLETION])}\n\n'
-                'Введите символ или слово целиком\n'
-                f'{context.user_data[WORD]}'
+                # f'{' '.join(context.user_data[WORD_COMPLETION])}\n\n'
+                # 'Введите символ или слово целиком\n'
+                # f'{context.user_data[WORD]}'
             ),
         )
     return PLAY
@@ -166,7 +166,7 @@ def play(update: Update, context: CallbackContext) -> int:
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(context.user_data[TRIES])}\n'
-                f'{' '.join(context.user_data[WORD_COMPLETION])}\n\n'
+                f'{" ".join(context.user_data[WORD_COMPLETION])}\n\n'
                 'Введите символ или слово целиком\n'
                 f'{context.user_data[WORD]}'
             ),
