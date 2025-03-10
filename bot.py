@@ -13,7 +13,7 @@ from telegram.ext import (
     Updater,
 )
 
-from main import display_hangman, get_word, is_repeat, is_valid_input
+from hangman_utils import display_hangman, get_word, is_repeat, is_valid_input
 
 load_dotenv()
 
@@ -37,7 +37,8 @@ logging.basicConfig(
     REPEATED_LETTERS,
     REPEATED_WORDS,
     GUESSED,
-) = range(7)
+    PLAY_AGAIN
+) = range(8)
 
 
 def wake_up(update: Update, context: CallbackContext) -> int:
@@ -175,6 +176,13 @@ def play(update: Update, context: CallbackContext) -> int:
     return PLAY
 
 
+def play_again(
+        update: Update,
+        context: CallbackContext
+) -> int:
+    return ConversationHandler.END
+
+
 def cancel_handler(
         update: Update,
         context: CallbackContext
@@ -193,8 +201,14 @@ play_handler = ConversationHandler(
     states={
         PLAY: [
             MessageHandler(
-                Filters.all,
+                Filters.text,
                 play,
+            ),
+        ],
+        PLAY_AGAIN: [
+            MessageHandler(
+                Filters.text,
+                play_again,
             ),
         ],
     },
