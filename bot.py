@@ -37,8 +37,7 @@ logging.basicConfig(
     REPEATED_LETTERS,
     REPEATED_WORDS,
     GUESSED,
-    PLAY_AGAIN
-) = range(8)
+) = range(7)
 
 
 def wake_up(update: Update, context: CallbackContext) -> int:
@@ -126,9 +125,18 @@ def play(update: Update, context: CallbackContext) -> int:
             )
         elif ''.join(word_completion) == word:
             context.user_data[WORD_COMPLETION] = word_completion
+            button = ReplyKeyboardMarkup(
+                [['Начать игру', 'Завершить игру'],],
+                resize_keyboard=True,
+                one_time_keyboard=True,
+            )
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='Поздравляем, вы угадали слово! Вы победили!',
+                text=(
+                    'Поздравляем, вы угадали слово! Вы победили! '
+                    'Хотите сыграть ещё?'
+                ),
+                reply_markup=button,
             )
             return ConversationHandler.END
         else:
@@ -163,7 +171,7 @@ def play(update: Update, context: CallbackContext) -> int:
                 ),
                 reply_markup=button,
             )
-            return PLAY_AGAIN
+            return ConversationHandler.END
         else:
             tries -= 1
             context.user_data[TRIES] = tries
@@ -183,21 +191,6 @@ def play(update: Update, context: CallbackContext) -> int:
         )
 
     return PLAY
-
-
-def play_again(
-        update: Update,
-        context: CallbackContext
-) -> int:
-    user_input = update.message.text
-    if user_input == 'Начать игру':
-        return start_game(update, context)
-    else:
-        context.bot.send_message(
-            chat_id=update.effective_chat.id,
-            text='Спасибо за игру! До встречи!',
-        )
-        return ConversationHandler.END
 
 
 def cancel_handler(
@@ -220,12 +213,6 @@ play_handler = ConversationHandler(
             MessageHandler(
                 Filters.text,
                 play,
-            ),
-        ],
-        PLAY_AGAIN: [
-            MessageHandler(
-                Filters.text,
-                play_again,
             ),
         ],
     },
