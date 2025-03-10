@@ -92,13 +92,20 @@ def play(update: Update, context: CallbackContext) -> int:
         return PLAY
 
     if tries == 1:
+        button = ReplyKeyboardMarkup(
+            [['Начать игру', 'Завершить игру'],],
+            resize_keyboard=True,
+            one_time_keyboard=True,
+        )
         context.bot.send_message(
             chat_id=update.effective_chat.id,
             text=(
                 f'{display_hangman(context.user_data[TRIES] - 1)}\n'
                 'Вы проиграли!\n'
                 f'Правильный ответ {word}'
+                'Хотите сыграть ещё?'
             ),
+            reply_markup=button,
         )
         return ConversationHandler.END
 
