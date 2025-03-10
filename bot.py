@@ -150,11 +150,20 @@ def play(update: Update, context: CallbackContext) -> int:
 
         if user_input == word:
             context.user_data[WORD_COMPLETION] = list(word)
+            button = ReplyKeyboardMarkup(
+                [['Начать игру', 'Завершить игру'],],
+                resize_keyboard=True,
+                one_time_keyboard=True,
+            )
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='Поздравляем, вы угадали слово! Вы победили!',
+                text=(
+                    'Поздравляем, вы угадали слово! Вы победили! '
+                    'Хотите сыграть ещё?'
+                ),
+                reply_markup=button,
             )
-            return ConversationHandler.END
+            return PLAY_AGAIN
         else:
             tries -= 1
             context.user_data[TRIES] = tries
@@ -180,7 +189,15 @@ def play_again(
         update: Update,
         context: CallbackContext
 ) -> int:
-    return ConversationHandler.END
+    user_input = update.message.text
+    if user_input == 'Начать игру':
+        return start_game(update, context)
+    else:
+        context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text='Спасибо за игру! До встречи!',
+        )
+        return ConversationHandler.END
 
 
 def cancel_handler(
