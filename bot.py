@@ -140,8 +140,8 @@ def play(update: Update, context: CallbackContext) -> int:
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=(
-                    'Поздравляем, вы угадали слово! Вы победили! '
-                    'Хотите сыграть ещё?'
+                    'Поздравляю, вы угадали слово! '
+                    'Продолжим игру?'
                 ),
                 reply_markup=button,
             )
@@ -173,8 +173,8 @@ def play(update: Update, context: CallbackContext) -> int:
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=(
-                    'Поздравляем, вы угадали слово! Вы победили! '
-                    'Хотите сыграть ещё?'
+                    'Поздравляю, вы угадали слово! '
+                    'Продолжим игру?'
                 ),
                 reply_markup=button,
             )
