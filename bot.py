@@ -61,7 +61,7 @@ def start_game(update: Update, context: CallbackContext) -> int:
     ]
     context.user_data[REPEATED_LETTERS] = []
     context.user_data[REPEATED_WORDS] = []
-    context.user_data[TRIES] = 6
+    context.user_data[TRIES] = 7
     context.user_data[GUESSED] = False
 
     context.bot.send_message(
