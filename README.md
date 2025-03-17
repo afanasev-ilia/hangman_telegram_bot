@@ -5,29 +5,6 @@
 
 Telegram-бот для игры в "Виселицу" (Hangman). Бот позволяет пользователям угадывать слова, вводя буквы или целые слова. Игра поддерживает русский алфавит и предоставляет визуальное отображение текущего состояния игры.
 
-## Установка и запуск
-
-1. **Клонируйте репозиторий:**
-   ```bash
-   git clone https://github.com/yourusername/hangman-telegram-bot.git
-   cd hangman-telegram-bot
-   ```
-
-2. **Установите зависимости:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Создайте файл `.env` и добавьте ваш Telegram токен:**
-   ```plaintext
-   TELEGRAM_TOKEN=your_telegram_bot_token
-   ```
-
-4. **Запустите бота:**
-   ```bash
-   python bot.py
-   ```
-
 ## Как играть
 
 1. **Запустите бота командой `/start`.**
@@ -136,6 +113,29 @@ Telegram-бот для игры в "Виселицу" (Hangman). Бот позв
      ```
      Спасибо, что играли в нашу игру! До встречи!
      ```
+
+## Установка и запуск
+
+1. **Клонируйте репозиторий:**
+   ```bash
+   git clone https://github.com/yourusername/hangman-telegram-bot.git
+   cd hangman-telegram-bot
+   ```
+
+2. **Установите зависимости:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Создайте файл `.env` и добавьте ваш Telegram токен:**
+   ```plaintext
+   TELEGRAM_TOKEN=your_telegram_bot_token
+   ```
+
+4. **Запустите бота:**
+   ```bash
+   python bot.py
+   ```
 
 ## Лицензия
 
