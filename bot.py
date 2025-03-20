@@ -49,7 +49,7 @@ def wake_up(update: Update, context: CallbackContext) -> int:
     name = update.message.chat.first_name
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text='Здравствуйте, {}! Давайте играть в угадайку слов!'.format(name),
+        text='Здравствуйте, {}!\nДавайте играть в угадайку слов!'.format(name),
         reply_markup=button,
     )
 
@@ -102,7 +102,7 @@ def play(update: Update, context: CallbackContext) -> int:
             text=(
                 f'{display_hangman(context.user_data[TRIES] - 1)}\n'
                 'Вы проиграли!\n'
-                f'Правильный ответ {word}'
+                f'Правильный ответ {word}\n'
                 'Хотите сыграть ещё?'
             ),
             reply_markup=button,
@@ -113,7 +113,7 @@ def play(update: Update, context: CallbackContext) -> int:
         if is_repeat(user_input, repeated_letters, repeated_words):
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='Вы уже вводили эту букву!',
+                text='Вы уже вводили букву "{}"!'.format(user_input),
             )
             return PLAY
         repeated_letters.append(user_input)
@@ -128,7 +128,7 @@ def play(update: Update, context: CallbackContext) -> int:
             context.user_data[TRIES] = tries
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='Неверно!',
+                text='Буквы "{}" нет в этом слове!'.format(user_input),
             )
         elif ''.join(word_completion) == word:
             context.user_data[WORD_COMPLETION] = word_completion
@@ -140,7 +140,7 @@ def play(update: Update, context: CallbackContext) -> int:
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=(
-                    'Поздравляю, вы угадали слово! '
+                    '🎉 Поздравляю, Вы угадали слово! 🎉\n'
                     'Продолжим игру?'
                 ),
                 reply_markup=button,
@@ -160,6 +160,13 @@ def play(update: Update, context: CallbackContext) -> int:
             )
             return PLAY
 
+        if len(user_input) != len(word):
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=f'Длина слова должна быть {len(word)} букв!',
+            )
+            return PLAY
+
         repeated_words.append(user_input)
         context.user_data[REPEATED_WORDS] = repeated_words
 
@@ -173,7 +180,7 @@ def play(update: Update, context: CallbackContext) -> int:
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=(
-                    'Поздравляю, вы угадали слово! '
+                    '🎉 Поздравляю, Вы угадали слово! 🎉\n'
                     'Продолжим игру?'
                 ),
                 reply_markup=button,
@@ -184,7 +191,7 @@ def play(update: Update, context: CallbackContext) -> int:
             context.user_data[TRIES] = tries
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='Неверно!',
+                text='❌ Увы, это неверное слово!',
             )
 
     context.bot.send_message(
