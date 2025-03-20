@@ -211,7 +211,7 @@ def cancel_handler(
         update: Update,
         context: CallbackContext
 ) -> int:
-    update.message.reply_text('Спасибо, что играли в нашу игру! До встречи!')
+    update.message.reply_text('Спасибо, что играли в нашу игру!\nДо встречи!')
     return ConversationHandler.END
 
 
@@ -225,9 +225,10 @@ play_handler = ConversationHandler(
     states={
         PLAY: [
             MessageHandler(
-                Filters.text,
+                Filters.text & ~Filters.command,
                 play,
             ),
+            CommandHandler('cancel', cancel_handler),
         ],
     },
     fallbacks=[
