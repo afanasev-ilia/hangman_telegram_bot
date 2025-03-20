@@ -93,7 +93,7 @@ def play(update: Update, context: CallbackContext) -> int:
 
     if tries == 1:
         button = ReplyKeyboardMarkup(
-            [['Начать игру', 'Завершить игру'],],
+            [['Начать игру'],],
             resize_keyboard=True,
             one_time_keyboard=True,
         )
@@ -133,7 +133,7 @@ def play(update: Update, context: CallbackContext) -> int:
         elif ''.join(word_completion) == word:
             context.user_data[WORD_COMPLETION] = word_completion
             button = ReplyKeyboardMarkup(
-                [['Начать игру', 'Завершить игру'],],
+                [['Начать игру'],],
                 resize_keyboard=True,
                 one_time_keyboard=True,
             )
@@ -173,7 +173,7 @@ def play(update: Update, context: CallbackContext) -> int:
         if user_input == word:
             context.user_data[WORD_COMPLETION] = list(word)
             button = ReplyKeyboardMarkup(
-                [['Начать игру', 'Завершить игру'],],
+                [['Начать игру'],],
                 resize_keyboard=True,
                 one_time_keyboard=True,
             )
