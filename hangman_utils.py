@@ -1,4 +1,3 @@
-# import logging
 import random
 
 from hangman_data import stages, word_list
