@@ -19,7 +19,6 @@ load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 
-
 logging.basicConfig(
     level=logging.INFO,
     filename=Path('program.log'),
@@ -111,7 +110,7 @@ async def play(update: Update, context: CallbackContext) -> int:
 
     if len(user_input) == 1:
         if is_repeat(user_input, repeated_letters, repeated_words):
-            context.bot.send_message(
+            await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text='Вы уже вводили букву "{}"!'.format(user_input),
             )
@@ -211,43 +210,14 @@ async def cancel_handler(
         update: Update,
         context: CallbackContext
 ) -> int:
-    await update.message.reply_text('Спасибо, что играли в нашу игру!\nДо встречи!')
+    await update.message.reply_text(
+        'Спасибо, что играли в нашу игру!\nДо встречи!',
+        )
     return ConversationHandler.END
 
 
-# play_handler = ConversationHandler(
-#     entry_points=[
-#         MessageHandler(
-#             filters.Regex('Начать игру'),
-#             start_game,
-#         ),
-#     ],
-#     states={
-#         PLAY: [
-#             MessageHandler(
-#                 filters.TEXT & ~filters.COMMAND,
-#                 play,
-#             ),
-#             CommandHandler('cancel', cancel_handler),
-#         ],
-#     },
-#     fallbacks=[
-#         CommandHandler('cancel', cancel_handler),
-#     ],
-# )
-
-
-# updater = (
-#     Updater(token=TELEGRAM_TOKEN)
-# )
-# updater.dispatcher.add_handler(CommandHandler('start', wake_up))
-# updater.dispatcher.add_handler(play_handler)
-# updater.start_polling()
-# updater.idle()
-
 def main() -> None:
-    """Run the bot."""
-    # Create the Application and pass it your bot's token.
+    '''Run the bot.'''
     application = Application.builder().token(TELEGRAM_TOKEN).build()
 
     play_handler = ConversationHandler(
@@ -263,7 +233,6 @@ def main() -> None:
                     filters.TEXT & ~filters.COMMAND,
                     play,
                 ),
-                CommandHandler('cancel', cancel_handler),
             ],
         },
         fallbacks=[
@@ -271,27 +240,11 @@ def main() -> None:
         ],
     )
 
-    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
-    # conv_handler = ConversationHandler(
-    #     entry_points=[CommandHandler("start", start)],
-    #     states={
-    #         GENDER: [MessageHandler(filters.Regex("^(Boy|Girl|Other)$"), gender)],
-    #         PHOTO: [MessageHandler(filters.PHOTO, photo), CommandHandler("skip", skip_photo)],
-    #         LOCATION: [
-    #             MessageHandler(filters.LOCATION, location),
-    #             CommandHandler("skip", skip_location),
-    #         ],
-    #         BIO: [MessageHandler(filters.TEXT & ~filters.COMMAND, bio)],
-    #     },
-    #     fallbacks=[CommandHandler("cancel", cancel)],
-    # )
-
     application.add_handler(CommandHandler('start', wake_up))
     application.add_handler(play_handler)
 
-    # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
