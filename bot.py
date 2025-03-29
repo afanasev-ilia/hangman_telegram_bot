@@ -36,7 +36,8 @@ logging.basicConfig(
     REPEATED_LETTERS,
     REPEATED_WORDS,
     GUESSED,
-) = range(7)
+    DIFFICULTY,
+) = range(8)
 
 
 async def wake_up(update: Update, context: CallbackContext) -> int:
@@ -51,6 +52,23 @@ async def wake_up(update: Update, context: CallbackContext) -> int:
         text='Здравствуйте, {}!\nДавайте играть в угадайку слов!'.format(name),
         reply_markup=button,
     )
+
+
+async def choose_difficulty(update: Update, context: CallbackContext) -> int:
+    buttons = ReplyKeyboardMarkup(
+        [['Легкий', 'Средний', 'Сложный']],
+        resize_keyboard=True,
+        one_time_keyboard=True,
+    )
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text='Выберите уровень сложности:\n'
+             'Легкий: слова из 3-5 букв\n'
+             'Средний: слова из 6-8 букв\n'
+             'Сложный: слова из 9-11 букв',
+        reply_markup=buttons,
+    )
+    return DIFFICULTY
 
 
 async def start_game(update: Update, context: CallbackContext) -> int:
