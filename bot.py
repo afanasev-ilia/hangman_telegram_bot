@@ -246,6 +246,12 @@ def main() -> None:
             ),
         ],
         states={
+            DIFFICULTY: [
+                MessageHandler(
+                    filters.TEXT & ~filters.COMMAND,
+                    start_game,
+                ),
+            ],
             PLAY: [
                 MessageHandler(
                     filters.TEXT & ~filters.COMMAND,
