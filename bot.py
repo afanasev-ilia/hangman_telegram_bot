@@ -242,7 +242,7 @@ def main() -> None:
         entry_points=[
             MessageHandler(
                 filters.Regex('Начать игру'),
-                start_game,
+                choose_difficulty,
             ),
         ],
         states={
