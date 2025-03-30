@@ -30,10 +30,10 @@ logging.basicConfig(
 
 (
     START_GAME,
+    PLAY,
     WORD,
     WORD_COMPLETION,
     TRIES,
-    PLAY,
     REPEATED_LETTERS,
     REPEATED_WORDS,
     GUESSED,
@@ -220,7 +220,6 @@ async def play(update: Update, context: CallbackContext) -> int:
                 f'{context.user_data[WORD]}'
             ),
         )
-
     return PLAY
 
 
