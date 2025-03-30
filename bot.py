@@ -29,6 +29,7 @@ logging.basicConfig(
 )
 
 (
+    START_GAME,
     WORD,
     WORD_COMPLETION,
     TRIES,
@@ -36,7 +37,6 @@ logging.basicConfig(
     REPEATED_LETTERS,
     REPEATED_WORDS,
     GUESSED,
-    DIFFICULTY,
 ) = range(8)
 
 
@@ -68,7 +68,7 @@ async def choose_difficulty(update: Update, context: CallbackContext) -> int:
              'Сложный: слова из 9-11 букв',
         reply_markup=buttons,
     )
-    return DIFFICULTY
+    return START_GAME
 
 
 async def start_game(update: Update, context: CallbackContext) -> int:
@@ -246,7 +246,7 @@ def main() -> None:
             ),
         ],
         states={
-            DIFFICULTY: [
+            START_GAME: [
                 MessageHandler(
                     filters.TEXT & ~filters.COMMAND,
                     start_game,
