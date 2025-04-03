@@ -79,6 +79,8 @@ async def start_game(update: Update, context: CallbackContext) -> int:
         context.user_data[WORD] = get_word('medium')
     elif difficulty == 'сложный':
         context.user_data[WORD] = get_word('hard')
+    else:
+        context.user_data[WORD] = get_word('easy')
 
     context.user_data[WORD_COMPLETION] = [
         '_' for _ in range(len(context.user_data[WORD]))
