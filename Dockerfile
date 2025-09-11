@@ -9,9 +9,4 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY . .
 
-RUN useradd -m -u 1000 botuser && \
-    chown -R botuser:botuser /app
-
-USER botuser
-
 CMD ["python", "bot.py"]
