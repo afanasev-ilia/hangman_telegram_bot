@@ -96,7 +96,6 @@ async def start_game(update: Update, context: CallbackContext) -> int:
                 f'{display_hangman(context.user_data[TRIES])}\n'
                 f'{" " .join(context.user_data[WORD_COMPLETION])}\n\n'
                 'Введите символ или слово целиком\n'
-                f'{context.user_data[WORD]}'
             ),
         )
     return PLAY
