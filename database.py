@@ -30,3 +30,5 @@ class Database:
                         description TEXT
                     )
                 ''')
+        except sqlite3.Error as e:
+            logging.error(f"Ошибка инициализации БД: {e}")
