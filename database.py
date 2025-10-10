@@ -26,6 +26,7 @@ class Database:
                     )
                 '''
                 )
+
                 cursor.execute(
                     '''
                     CREATE TABLE IF NOT EXISTS word_categories (
@@ -35,6 +36,18 @@ class Database:
                     )
                 '''
                 )
+
+                cursor.execute('''
+                    CREATE TABLE IF NOT EXISTS words (
+                        word_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        word TEXT UNIQUE NOT NULL,
+                        length INTEGER NOT NULL,
+                        category_id INTEGER,
+                        difficulty TEXT CHECK(difficulty IN ('easy', 'medium', 'hard')),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        FOREIGN KEY (category_id) REFERENCES word_categories (category_id)
+                    )
+                ''')
 
         except sqlite3.Error as e:
             logging.error(f"Ошибка инициализации БД: {e}")
