@@ -49,5 +49,8 @@ class Database:
                     )
                 ''')
 
+                conn.commit()
+                self._insert_initial_data(cursor)
+
         except sqlite3.Error as e:
             logging.error(f"Ошибка инициализации БД: {e}")
