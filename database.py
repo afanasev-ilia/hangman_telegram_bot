@@ -3,6 +3,8 @@ import logging
 # from datetime import datetime
 from pathlib import Path
 
+from hangman_data import word_list
+
 
 class Database:
     def __init__(self, db_path='hangman_bot.db'):
@@ -54,3 +56,8 @@ class Database:
 
         except sqlite3.Error as e:
             logging.error(f"Ошибка инициализации БД: {e}")
+
+    def _insert_initial_data(self, cursor):
+        words_to_insert = []
+        for word in word_list:
+            words_to_insert.append((word, len(word), 1,))
