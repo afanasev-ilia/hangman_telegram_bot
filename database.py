@@ -58,6 +58,20 @@ class Database:
             logging.error(f"Ошибка инициализации БД: {e}")
 
     def _insert_initial_data(self, cursor):
+
+        categories = [
+            ('common', 'Общие слова'),
+            ('animals', 'Животные'),
+            ('food', 'Еда'),
+            ('cities', 'Города'),
+            ('professions', 'Профессии')
+        ]
+        
+        cursor.executemany('''
+            INSERT OR IGNORE INTO word_categories (name, description) 
+            VALUES (?, ?)
+        ''', categories)
+
         words_to_insert = []
         for word in word_list:
             words_to_insert.append((word, len(word), 1,))
