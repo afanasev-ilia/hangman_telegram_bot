@@ -66,12 +66,27 @@ class Database:
             ('cities', 'Города'),
             ('professions', 'Профессии')
         ]
-        
+
         cursor.executemany('''
-            INSERT OR IGNORE INTO word_categories (name, description) 
+            INSERT OR IGNORE INTO word_categories (name, description)
             VALUES (?, ?)
         ''', categories)
 
         words_to_insert = []
         for word in word_list:
             words_to_insert.append((word, len(word), 1,))
+
+    def add_user(self, user_id, username=None, first_name=None):
+        """Добавление/обновление пользователя"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute('''
+                    INSERT OR IGNORE INTO users 
+                    (user_id, username, first_name) 
+                    VALUES (?, ?, ?)
+                ''', (user_id, username, first_name))
+                
+                conn.commit()
+        except sqlite3.Error as e:
+            logging.error(f"Ошибка добавления пользователя: {e}")
