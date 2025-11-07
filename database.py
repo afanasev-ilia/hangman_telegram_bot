@@ -86,7 +86,13 @@ class Database:
                     (user_id, username, first_name) 
                     VALUES (?, ?, ?)
                 ''', (user_id, username, first_name))
-                
+
+                cursor.execute('''
+                    INSERT OR IGNORE INTO user_stats 
+                    (user_id) 
+                    VALUES (?)
+                ''', (user_id,))
+
                 conn.commit()
         except sqlite3.Error as e:
             logging.error(f"Ошибка добавления пользователя: {e}")
