@@ -1,6 +1,6 @@
 import sqlite3
 import logging
-# from datetime import datetime
+from datetime import datetime
 from pathlib import Path
 
 from hangman_data import word_list
@@ -96,3 +96,32 @@ class Database:
                 conn.commit()
         except sqlite3.Error as e:
             logging.error(f"Ошибка добавления пользователя: {e}")
+
+    def get_word(self, difficulty=None, category=None):
+        """Получение случайного слова"""
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                
+                query = "SELECT word FROM words"
+                params = []
+                
+                if difficulty and category:
+                    query += " WHERE difficulty = ? AND category = ?"
+                    params = [difficulty, category]
+                elif difficulty:
+                    query += " WHERE difficulty = ?"
+                    params = [difficulty]
+                elif category:
+                    query += " WHERE category = ?"
+                    params = [category]
+                
+                query += " ORDER BY RANDOM() LIMIT 1"
+                
+                cursor.execute(query, params)
+                result = cursor.fetchone()
+                return result[0].upper() if result else None
+                
+        except sqlite3.Error as e:
+            logging.error(f"Ошибка получения слова: {e}")
+            return None
